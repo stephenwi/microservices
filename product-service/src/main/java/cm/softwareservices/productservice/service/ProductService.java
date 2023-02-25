@@ -17,11 +17,10 @@ public class ProductService {
     private final ProductRepository repository;
     public void createProduct(ProductRequest request) {
         log.info("creating new product with name " + request.getName());
-        Product product = Product.builder()
-                .name(request.getName())
-                .description(request.getDescription())
-                .price(request.getPrice())
-                .build();
+        Product product = new Product();
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
         repository.save(product);
         log.info("Product saved successfully with id:{}", product.getId());
     }
@@ -34,11 +33,13 @@ public class ProductService {
     }
 
     private ProductResponse mapToProductResponse(Product product) {
-        return ProductResponse.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .description(product.getDescription())
-                .price(product.getPrice())
-                .build();
+        ProductResponse response = new ProductResponse();
+
+                response.setId(product.getId());
+                response.setName(product.getName());
+                response.setDescription(product.getDescription());
+                response.setPrice(product.getPrice());
+
+        return response;
     }
 }
